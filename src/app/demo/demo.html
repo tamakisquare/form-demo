@@ -1,0 +1,22 @@
+<div>
+  <button type="button success" disabled-by-form="emailForm">Next</button>
+</div>
+
+<div ng-controller="EmailFormController as formVm">
+  <form name="emailForm" form-delegate>
+    <label>Name:
+      <input type="text" name="myName" required ng-pattern="/^[a-zA-Z\- ]+$/" ng-model="formVm.name" ng-class="{error: emailForm.myName.$invalid}" />
+      <div ng-messages="emailForm.myName.$error">
+        <small class="error" ng-message="required">Required</small>
+        <small class="error" ng-message="pattern">Invalid character found</small>
+      </div>
+    </label>
+    <label>Email:
+      <input type="email" name="myEmail" required ng-model="formVm.email" ng-class="{error: emailForm.myEmail.$invalid}" />
+      <div ng-messages="emailForm.myEmail.$error">
+        <small class="error" ng-message="required">Required</small>
+        <small class="error" ng-message="email">Incorrect email format</small>
+      </div>
+    </label>
+  </form>
+</div>
