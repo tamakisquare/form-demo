@@ -1,21 +1,23 @@
 <div>
-  <button type="button success" disabled-by-form="emailForm">Next</button>
+  <button type="button success" access-to-form="emailForm" disabled-by-form ng-click="demoVm.submit(demoVm.data, injectedForm)">Submit</button>
 </div>
 
-<div ng-controller="EmailFormController as formVm">
-  <form name="emailForm" form-delegate>
+<div>
+  <form name="emailForm" form-delegate on-demand-validation server-validation="demoVm.submitProm">
     <label>Name:
-      <input type="text" name="myName" required ng-pattern="/^[a-zA-Z\- ]+$/" ng-model="formVm.name" ng-class="{error: emailForm.myName.$invalid}" />
-      <div ng-messages="emailForm.myName.$error">
+      <input type="text" name="name" required ng-pattern="/^[a-zA-Z\- ]+$/" ng-model="demoVm.data.name" validate-only-correction />
+      <div ng-messages="emailForm.name.$error" ng-if="!emailForm.name.$validatable">
         <small class="error" ng-message="required">Required</small>
         <small class="error" ng-message="pattern">Invalid character found</small>
+        <small class="error" ng-message="server">{{serverErrors.name}}</small>
       </div>
     </label>
     <label>Email:
-      <input type="email" name="myEmail" required ng-model="formVm.email" ng-class="{error: emailForm.myEmail.$invalid}" />
-      <div ng-messages="emailForm.myEmail.$error">
+      <input type="email" name="email" required ng-model="demoVm.data.email" validate-only-correction />
+      <div ng-messages="emailForm.email.$error" ng-if="!emailForm.email.$validatable">
         <small class="error" ng-message="required">Required</small>
         <small class="error" ng-message="email">Incorrect email format</small>
+        <small class="error" ng-message="server">{{serverErrors.email}}</small>
       </div>
     </label>
   </form>
